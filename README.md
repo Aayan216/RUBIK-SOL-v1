@@ -123,6 +123,56 @@ RUBIK-SOL-v1/
 
 4. **Display**: The solution is presented as a sequence of moves with step-by-step navigation
 
+## Architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                        USER INPUT                           │
+│  Upload 6 photos OR manually select colors on 3x3 grids    │
+└───────────────────────────┬─────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    AI COLOR DETECTION                       │
+│  Google Gemini 3.5 Flash identifies 54 sticker colors      │
+│  (white, yellow, red, orange, blue, green)                  │
+└───────────────────────────┬─────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    CUBE VALIDATION                          │
+│  Django checks: 6 faces, 9 stickers each,                  │
+│  each color appears 9 times, physically solvable            │
+└───────────────────────────┬─────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    SOLVE ALGORITHM                          │
+│  Kociemba's two-phase algorithm (runs in browser)           │
+│  Phase 1: Orient edges + corners → Subgroup                 │
+│  Phase 2: Solve within subgroup → Solved cube               │
+└───────────────────────────┬─────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    SOLUTION DISPLAY                         │
+│  Interactive step-by-step moves with Previous/Next buttons  │
+└─────────────────────────────────────────────────────────────┘
+```
+
+## Benchmark Results
+
+| Metric | Value |
+|--------|-------|
+| Total Solves | 3 |
+| Move Range | 16 - 22 moves |
+| Average Moves | ~19 |
+| Solve Time Range | 23 - 74 ms |
+| Average Solve Time | ~44 ms |
+| Max Search Depth | 22 moves |
+
+*Solve times measured on client-side JavaScript (Kociemba two-phase algorithm)*
+
 ## Deployment
 
 ### Render (Live)
