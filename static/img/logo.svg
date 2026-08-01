@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" width="800" height="300">
+  <defs>
+    <clipPath id="circle-clip">
+      <circle cx="150" cy="150" r="130"/>
+    </clipPath>
+  </defs>
+
+  <!-- Transparent background -->
+  <rect width="800" height="300" fill="none"/>
+
+  <!-- Outer circle - lightest pink -->
+  <circle cx="150" cy="150" r="130" fill="#F5D5CC"/>
+  <!-- Middle circle -->
+  <circle cx="150" cy="150" r="110" fill="#F0B8AD"/>
+  <!-- Inner circle - accent color -->
+  <circle cx="150" cy="150" r="90" fill="#E89E96"/>
+  <!-- Innermost circle -->
+  <circle cx="150" cy="150" r="72" fill="#CE726F"/>
+
+  <!-- 3D Cube icon (white outline) -->
+  <g transform="translate(150,148)" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Front face -->
+    <path d="M-30,-5 L-30,35 L10,55 L10,15 Z"/>
+    <!-- Top face -->
+    <path d="M-30,-5 L10,-25 L50,-5 L10,15 Z"/>
+    <!-- Right face -->
+    <path d="M50,-5 L50,35 L10,55 L10,15 Z"/>
+  </g>
+
+  <!-- "RUBIK SOL" text -->
+  <text x="310" y="155" font-family="Arial, Helvetica, sans-serif" font-size="72" font-weight="bold" fill="#FFFFFF" letter-spacing="2">RUBIK SOL</text>
+
+  <!-- "BY TESSERACT" text -->
+  <text x="312" y="195" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#5C3030" letter-spacing="8">BY TESSERACT</text>
+</svg>

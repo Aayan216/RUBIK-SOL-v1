@@ -1,0 +1,45 @@
+{% extends "solver/base.html" %}
+{% load static %}
+
+{% block title %}Solve History - Rubik Sol AI{% endblock %}
+
+{% block content %}
+<h2 class="mb-3"><i class="fas fa-history me-2"></i>Solve History</h2>
+
+{% if solves %}
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead style="background-color: var(--accent); color: #fff;">
+            <tr>
+                <th>#</th>
+                <th>Date</th>
+                <th>Moves</th>
+                <th>Move Sequence</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for solve in solves %}
+            <tr>
+                <td>{{ solve.id }}</td>
+                <td>{{ solve.created_at|date:"M d, Y H:i" }}</td>
+                <td><span class="badge badge-accent">{{ solve.move_count }}</span></td>
+                <td class="move-sequence">
+                    {% for move in solve.moves %}
+                    <span class="badge bg-secondary me-1">{{ move }}</span>
+                    {% endfor %}
+                    {% if not solve.moves %}
+                    <span class="text-muted">-</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="text-center py-5">
+    <i class="fas fa-cube fa-3x text-muted mb-3"></i>
+    <p class="text-muted">No solves yet. <a href="{% url 'capture' %}">Solve your first cube!</a></p>
+</div>
+{% endif %}
+{% endblock %}

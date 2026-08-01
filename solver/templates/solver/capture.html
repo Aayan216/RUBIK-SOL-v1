@@ -1,0 +1,134 @@
+{% extends "solver/base.html" %}
+{% load static %}
+
+{% block title %}Enter Cube Colors - Rubik Sol AI{% endblock %}
+
+{% block content %}
+<h2 class="mb-2"><i class="fas fa-cube me-2"></i>Enter Cube Colors</h2>
+<p class="text-muted mb-4">Upload a photo of each face or click squares to set colors manually.</p>
+
+<div class="text-center mb-4">
+    <div id="detect-progress" class="d-none">
+        <div class="spinner-border spinner-border-sm badge-accent me-2" role="status"></div>
+        <span id="detect-progress-text">Detecting colors...</span>
+    </div>
+</div>
+
+<div class="row g-3 justify-content-center">
+    <div class="col-12 col-sm-6 col-md-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <h6 class="card-title">Front <span class="badge bg-secondary" id="status-front"></span></h6>
+                <button class="btn btn-outline-accent btn-sm upload-btn mb-2" data-face="front">
+                    <i class="fas fa-camera me-1"></i>Upload Image
+                </button>
+                <input type="file" id="file-input-front" accept="image/*" class="d-none">
+                <div class="color-grid-3x3" id="grid-front" data-face="front">
+                    {% for i in "012345678" %}
+                    <div class="color-cell white" data-index="{{ forloop.counter0 }}" data-face="front" data-color="white"></div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-sm-6 col-md-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <h6 class="card-title">Top <span class="badge bg-secondary" id="status-top"></span></h6>
+                <button class="btn btn-outline-accent btn-sm upload-btn mb-2" data-face="top">
+                    <i class="fas fa-camera me-1"></i>Upload Image
+                </button>
+                <input type="file" id="file-input-top" accept="image/*" class="d-none">
+                <div class="color-grid-3x3" id="grid-top" data-face="top">
+                    {% for i in "012345678" %}
+                    <div class="color-cell white" data-index="{{ forloop.counter0 }}" data-face="top" data-color="white"></div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-sm-6 col-md-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <h6 class="card-title">Right <span class="badge bg-secondary" id="status-right"></span></h6>
+                <button class="btn btn-outline-accent btn-sm upload-btn mb-2" data-face="right">
+                    <i class="fas fa-camera me-1"></i>Upload Image
+                </button>
+                <input type="file" id="file-input-right" accept="image/*" class="d-none">
+                <div class="color-grid-3x3" id="grid-right" data-face="right">
+                    {% for i in "012345678" %}
+                    <div class="color-cell white" data-index="{{ forloop.counter0 }}" data-face="right" data-color="white"></div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-sm-6 col-md-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <h6 class="card-title">Bottom <span class="badge bg-secondary" id="status-bottom"></span></h6>
+                <button class="btn btn-outline-accent btn-sm upload-btn mb-2" data-face="bottom">
+                    <i class="fas fa-camera me-1"></i>Upload Image
+                </button>
+                <input type="file" id="file-input-bottom" accept="image/*" class="d-none">
+                <div class="color-grid-3x3" id="grid-bottom" data-face="bottom">
+                    {% for i in "012345678" %}
+                    <div class="color-cell white" data-index="{{ forloop.counter0 }}" data-face="bottom" data-color="white"></div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-sm-6 col-md-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <h6 class="card-title">Back <span class="badge bg-secondary" id="status-back"></span></h6>
+                <button class="btn btn-outline-accent btn-sm upload-btn mb-2" data-face="back">
+                    <i class="fas fa-camera me-1"></i>Upload Image
+                </button>
+                <input type="file" id="file-input-back" accept="image/*" class="d-none">
+                <div class="color-grid-3x3" id="grid-back" data-face="back">
+                    {% for i in "012345678" %}
+                    <div class="color-cell white" data-index="{{ forloop.counter0 }}" data-face="back" data-color="white"></div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-sm-6 col-md-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <h6 class="card-title">Left <span class="badge bg-secondary" id="status-left"></span></h6>
+                <button class="btn btn-outline-accent btn-sm upload-btn mb-2" data-face="left">
+                    <i class="fas fa-camera me-1"></i>Upload Image
+                </button>
+                <input type="file" id="file-input-left" accept="image/*" class="d-none">
+                <div class="color-grid-3x3" id="grid-left" data-face="left">
+                    {% for i in "012345678" %}
+                    <div class="color-cell white" data-index="{{ forloop.counter0 }}" data-face="left" data-color="white"></div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-center mt-4">
+    <button id="solve-btn" class="btn btn-accent btn-lg">
+        <i class="fas fa-play me-2"></i>Solve
+    </button>
+    <button id="reset-btn" class="btn btn-outline-secondary btn-lg ms-2">
+        <i class="fas fa-undo me-2"></i>Reset
+    </button>
+</div>
+
+<div id="error-alert" class="alert alert-danger mt-3 d-none"></div>
+<div id="loading" class="text-center my-4 d-none">
+    <div class="spinner-border badge-accent" role="status"></div>
+    <p class="mt-2">Validating cube state...</p>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/enter.js"></script>
+{% endblock %}
