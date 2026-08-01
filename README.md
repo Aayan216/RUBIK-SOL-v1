@@ -2,6 +2,8 @@
 
 An AI-powered Rubik's Cube solver that uses Google Gemini Vision to detect cube colors from photos and computes optimal solutions using Kociemba's two-phase algorithm.
 
+**Live Demo:** [rubik-sol-v1.onrender.com](https://rubik-sol-v1.onrender.com)
+
 ## Features
 
 - **AI-Powered Color Detection**: Upload photos of your cube's faces and let Google Gemini Vision identify the sticker colors automatically
@@ -101,7 +103,7 @@ RUBIK-SOL-v1/
 │   ├── css/                 # Stylesheets
 │   └── js/                  # JavaScript (cube solver)
 ├── requirements.txt         # Python dependencies
-├── Procfile                 # Heroku deployment config
+├── Procfile                 # Render deployment config
 └── manage.py                # Django management script
 ```
 
@@ -123,21 +125,28 @@ RUBIK-SOL-v1/
 
 ## Deployment
 
-The project is configured for deployment on platforms like Heroku:
+### Render (Live)
 
-```bash
-# Collect static files
-python manage.py collectstatic
+The app is deployed on Render: [rubik-sol-v1.onrender.com](https://rubik-sol-v1.onrender.com)
 
-# The Procfile is already configured:
-# web: gunicorn rubiks_project.wsgi:application
-```
+To deploy your own instance:
 
-For production, ensure you set:
-- `DEBUG = False` in settings.py
-- `DJANGO_SECRET_KEY` environment variable
-- `ALLOWED_HOSTS` environment variable
-- `GEMINI_API_KEY` environment variable
+1. Fork/clone this repository
+2. Create a **Web Service** on [Render](https://render.com)
+3. Connect your GitHub repository
+4. Configure:
+   - **Build Command:** `pip install -r requirements.txt && python manage.py collectstatic --noinput`
+   - **Start Command:** `gunicorn rubiks_project.wsgi:application`
+5. Add environment variables:
+   - `GEMINI_API_KEY` — your Google Gemini API key
+   - `DJANGO_SECRET_KEY` — a secure random string
+6. Deploy
+
+### Production Notes
+
+- Set `DEBUG = False` in settings.py
+- Set `ALLOWED_HOSTS` to your Render domain
+- The Procfile is already configured for gunicorn
 
 ## Environment Variables
 
