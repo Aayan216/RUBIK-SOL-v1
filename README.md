@@ -215,3 +215,10 @@ This project is open source and available under the MIT License.
 - **Herbert Kociemba** - For the two-phase algorithm implementation
 - **Google Gemini** - For powerful vision capabilities
 - **Django Community** - For the excellent web framework
+
+---
+
+## Author
+
+**Mohammed Aayan**  
+B.Tech — Computer Science & Information Technology
